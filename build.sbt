@@ -8,8 +8,10 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       guice,
       jdbc,
+      evolutions,
       "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test,
       "org.scalatest" %% "scalatest" % "3.2.2" % "test",
+      "org.scalactic" %% "scalactic" % "3.2.2",
       "org.postgresql" % "postgresql" % "42.2.18",
       "org.typelevel" %% "cats-core" % "2.1.1",
       "org.playframework.anorm" %% "anorm" % "2.6.7"
