@@ -1,10 +1,23 @@
 @import model.Item
-@(products: List[Item])
+@import form.ItemQuantityForm
+@(products: List[Item], form: Form[ItemQuantityForm])(implicit messagesProvider: MessagesProvider, request: RequestHeader)
 
 @main("Welcome") {
     @for(product <- products) {
-        <div>
-            <h1>@product.name</h1>
+        <div id="container">
+            <p id="product-name">@product.name</p>
+            <div id="img-container">
+            <img id="ps5" src="/assets/images/playstation5.png" alt="Play station">
+            <p id="product-price">£@(product.price)</p>
+            </div>
+        </div>
+        <div id="purchase-container">
+            <p>£@product.price</p>
+            @if(product.stock == 0){<p>Out of stock</p>} else {<p>In Stock</p>}
+
+            @helper.form(action = routes.HomeController.post()){
+                @helper.select(form("quantity"), Seq("one" -> "1", "two" -> "2"), Symbol("_default") -> 0)
+            }
         </div>
     }
 }
