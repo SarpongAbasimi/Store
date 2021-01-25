@@ -14,7 +14,8 @@ lazy val root = (project in file("."))
       "org.scalactic" %% "scalactic" % "3.2.2",
       "org.postgresql" % "postgresql" % "42.2.18",
       "org.typelevel" %% "cats-core" % "2.1.1",
-      "org.playframework.anorm" %% "anorm" % "2.6.7"
+      "org.playframework.anorm" %% "anorm" % "2.6.7",
+      "org.scalatestplus" %% "mockito-3-4" % "3.2.2.0" % "test"
     ),
     scalacOptions ++= Seq(
       "-feature",
