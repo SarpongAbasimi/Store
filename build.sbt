@@ -15,7 +15,9 @@ lazy val root = (project in file("."))
       "org.postgresql" % "postgresql" % "42.2.18",
       "org.typelevel" %% "cats-core" % "2.1.1",
       "org.playframework.anorm" %% "anorm" % "2.6.7",
-      "org.scalatestplus" %% "mockito-3-4" % "3.2.2.0" % "test"
+      "org.scalatestplus" %% "mockito-3-4" % "3.2.2.0" % "test",
+      "com.paypal.sdk" % "rest-api-sdk" % "1.14.0",
+      "com.paypal.sdk" % "paypal-core" % "1.7.2"
     ),
     scalacOptions ++= Seq(
       "-feature",

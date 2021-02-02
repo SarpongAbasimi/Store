@@ -17,6 +17,7 @@
 
             @helper.form(action = routes.HomeController.post()){
                 @helper.select(form("quantity"), Seq("one" -> "1", "two" -> "2"), Symbol("_default") -> 0)
+                <input type="submit" value="Checkout">
             }
         </div>
     }

@@ -23,6 +23,7 @@ class HomeController @Inject()(cc: ControllerComponents, productService: Product
   def index() = Action.async { implicit request: Request[AnyContent] =>
       productService.all.map(eachProduct => Ok(views.html.index(eachProduct, Forms.itemQuantityForm)))
     }
+
   def post() = Action { implicit request: Request[AnyContent] =>
     Redirect(routes.HomeController.index())
   }
