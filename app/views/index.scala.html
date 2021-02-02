@@ -1,4 +1,5 @@
 @import model.Item
+@import helper.CSRF
 @import form.ItemQuantityForm
 @(products: List[Item], form: Form[ItemQuantityForm])(implicit messagesProvider: MessagesProvider, request: RequestHeader)
 
@@ -16,8 +17,10 @@
             @if(product.stock == 0){<p>Out of stock</p>} else {<p>In Stock</p>}
 
             @helper.form(action = routes.HomeController.post()){
-                @helper.select(form("quantity"), Seq("one" -> "1", "two" -> "2"), Symbol("_default") -> 0)
+                @CSRF.formField
+                @helper.select(form("quantity"), Seq("1" -> "1", "2" -> "2"), Symbol("_default") -> 0)
                 <input type="submit" value="Checkout">
+                <div id="paypal-button-container"></div>
             }
         </div>
     }

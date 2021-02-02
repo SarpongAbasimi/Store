@@ -3,14 +3,18 @@ package controllers
 import javax.inject._
 import play.api.mvc._
 import service._
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
+import PaymentsTypesService._
 import form._
 /**
  * This controller creates an `Action` to handle HTTP requests to the
  * application's home page.
  */
+object ProductPrice {
+  val ps5RetailPrice= 700
+}
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents, productService: ProductService)(implicit ec: ExecutionContext)
+class HomeController @Inject()(cc: ControllerComponents, productService: ProductService, payment : PaypalService)(implicit ec: ExecutionContext)
   extends AbstractController(cc) with play.api.i18n.I18nSupport{
 
   /**
@@ -24,7 +28,17 @@ class HomeController @Inject()(cc: ControllerComponents, productService: Product
       productService.all.map(eachProduct => Ok(views.html.index(eachProduct, Forms.itemQuantityForm)))
     }
 
-  def post() = Action { implicit request: Request[AnyContent] =>
-    Redirect(routes.HomeController.index())
+  def post() = Action.async { implicit request: Request[AnyContent] =>
+    Forms.itemQuantityForm.bindFromRequest.fold( errors =>  {
+      productService.all.map(eachProduct => BadRequest(views.html.index(eachProduct, errors)))
+    }, succes => Future {
+      val amoutToPay = succes.quantity.toInt * ProductPrice.ps5RetailPrice
+
+      val currencyCode: CurrencyCode = CurrencyCode("USD")
+      val purcahseValue:PurchaseValue = PurchaseValue(amoutToPay.toString)
+
+      payment.order(currencyCode, purcahseValue)
+      Redirect(routes.HomeController.index())
+    })
   }
 }

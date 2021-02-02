@@ -17,10 +17,35 @@
     <link rel="shortcut icon" type="image/png" href='@routes.Assets.versioned("images/favicon.png")'>
     <script src='@routes.Assets.versioned("javascripts/hello.js")' type="text/javascript"></script>
     <script src='@routes.Assets.versioned("javascripts/prism.js")' type="text/javascript"></script>
+      <script src="https://www.paypal.com/sdk/js?client-id=PayPalClientID"></script>
 </head>
 
 <body>
     @content
 </body>
 
+@*    To be removed, just for testing purposes*@
+
+<script>
+        paypal.Buttons({
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: '5.00',
+                            currency_code: "USD"
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    console.log("-----------------------------------------------")
+                    console.log("------------Transaction Done-------------------")
+                    console.log("-----------------------------------------------")
+                    alert('Transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+        }).render('#paypal-button-container')
+</script>
 </html>
