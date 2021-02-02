@@ -17,7 +17,8 @@ lazy val root = (project in file("."))
       "org.playframework.anorm" %% "anorm" % "2.6.7",
       "org.scalatestplus" %% "mockito-3-4" % "3.2.2.0" % "test",
       "com.paypal.sdk" % "rest-api-sdk" % "1.14.0",
-      "com.paypal.sdk" % "paypal-core" % "1.7.2"
+      "com.paypal.sdk" % "paypal-core" % "1.7.2",
+      "com.paypal.sdk" % "checkout-sdk" % "1.0.2"
     ),
     scalacOptions ++= Seq(
       "-feature",
